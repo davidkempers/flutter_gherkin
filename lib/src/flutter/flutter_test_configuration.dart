@@ -132,6 +132,9 @@ class FlutterTestConfiguration extends TestConfiguration {
   /// method will be called on each new connection usually before each scenario is run.
   Future<void> Function(FlutterDriver driver)? onAfterFlutterDriverConnect;
 
+  /// Select the port for the VM service to run on
+  int? port;
+
   void setObservatoryDebuggerUri(String uri) => _observatoryDebuggerUri = uri;
 
   Future<FlutterDriver> createFlutterDriver([String? dartVmServiceUrl]) async {

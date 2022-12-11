@@ -57,6 +57,7 @@ class FlutterRunProcessHandler extends ProcessHandler {
   String? _deviceTargetId;
   Duration _driverConnectionDelay = const Duration(seconds: 2);
   String? currentObservatoryUri;
+  int? _port;
 
   void setLogFlutterProcessOutput(bool logFlutterProcessOutput) {
     _logFlutterProcessOutput = logFlutterProcessOutput;
@@ -102,6 +103,10 @@ class FlutterRunProcessHandler extends ProcessHandler {
     _keepAppRunning = keepRunning;
   }
 
+  void setPort(int? port) {
+    _port = port;
+  }
+
   @override
   Future<void> run() async {
     final arguments = ['run', '--target=$_appTarget'];
@@ -138,6 +143,10 @@ class FlutterRunProcessHandler extends ProcessHandler {
       arguments.add('--keep-app-running');
     }
 
+    if (_port != null) {
+      arguments.add('--host-vmservice-port');
+      arguments.add('$_port');
+    }
     if (_logFlutterProcessOutput) {
       stdout.writeln(
         'Invoking from working directory `${_workingDirectory ?? './'}` command: `flutter ${arguments.join(' ')}`',
